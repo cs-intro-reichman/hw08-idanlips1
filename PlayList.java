@@ -105,11 +105,7 @@ class PlayList {
      * returns true.
      */
     public boolean add(int i, Track track) {
-
-        if (i == this.size) {
-            add(track);
-        }
-        if (i < 0 || i > maxSize || size == maxSize) {
+        if (i < 0 || i > size || size == maxSize) {
             return false;
         }
         if (size == 0) {
@@ -136,11 +132,10 @@ class PlayList {
         if (i < 0 || size == 0 || i > size) {
             return;
         } else {
-            for (int j = i; j < size; j++){
-                tracks[j-1] = tracks[j];
+            for (int j = i; j < size - 1; j++) {
+                tracks[j] = tracks[j + 1];
             }
-            tracks[size-1] = null;
-            size--; 
+            size--;
         }
     }
 
@@ -150,8 +145,8 @@ class PlayList {
      * is negative or too big for this list, does nothing.
      */
     public void remove(String title) {
-        for (int i = 0; i < size; i++){
-            if (tracks[i].getTitle() == title){
+        for (int i = 0; i < size; i++) {
+            if (tracks[i].getTitle() == title) {
                 remove(i);
             }
 
@@ -162,7 +157,7 @@ class PlayList {
      * Removes the first track from this list. If the list is empty, does nothing.
      */
     public void removeFirst() {
-        if (size == 0){
+        if (size == 0) {
             return;
         }
         remove(0);
@@ -174,10 +169,10 @@ class PlayList {
      */
     //// An elegant and terribly inefficient implementation.
     public void add(PlayList other) {
-        if (this.size + other.size > maxSize){
+        if (this.size + other.size > maxSize) {
             return;
         } else {
-            for (int i = 0; i < other.size;i++){
+            for (int i = 0; i < other.size; i++) {
                 add(other.tracks[i]);
             }
         }
@@ -192,13 +187,13 @@ class PlayList {
      * If start is negative or greater than size - 1, returns -1.
      */
     private int minIndex(int start) {
-        if (start < 0 || start > size){
+        if (start < 0 || start > size) {
             return -1;
-        } 
+        }
         int minIndex = start;
         int minDuration = tracks[start].getDuration();
-        for (int i = start; i < size; i++){
-            if (tracks[i].getDuration() < minDuration){
+        for (int i = start; i < size; i++) {
+            if (tracks[i].getDuration() < minDuration) {
                 minDuration = tracks[i].getDuration();
                 minIndex = i;
             }
@@ -223,12 +218,12 @@ class PlayList {
     public void sortedInPlace() {
         // Uses the selection sort algorithm,
         // calling the minIndex method in each iteration.
-        for (int i = 0; i < size; i++){
+        for (int i = 0; i < size; i++) {
             int min = minIndex(i);
             Track temp = tracks[i];
             tracks[i] = tracks[min];
             tracks[min] = temp;
         }
-       
+
     }
 }
