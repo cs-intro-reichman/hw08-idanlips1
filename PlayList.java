@@ -116,7 +116,7 @@ class PlayList {
             add(track);
         } else {
             for (int j = size; j > i; j--) {
-                tracks[j + 1] = tracks[j];
+                tracks[j] = tracks[j - 1];
 
             }
             tracks[i] = track;
@@ -137,8 +137,9 @@ class PlayList {
             return;
         } else {
             for (int j = i; j < size; j++){
-                tracks [j] = tracks [j+1];
+                tracks[j-1] = tracks[j];
             }
+            tracks[size-1] = null;
             size--; 
         }
     }
